@@ -29,13 +29,13 @@ public interface BATHS extends Serializable
     
     /** returns true if War Chest <=0 and the admiral's fleet has no 
      * ships which can be decommissioned. 
-     * @returns true if War Chest <=0 and the admiral's fleet has no 
+     * @return true if War Chest <=0 and the admiral's fleet has no 
      * ships which can be decommissioned,else false. 
      */
     public boolean isDefeated();
     
     /** returns the amount of money in the War Chest
-     * @returns the amount of money in the War Chest
+     * @return the amount of money in the War Chest
      */
     public double getWarChest();
     

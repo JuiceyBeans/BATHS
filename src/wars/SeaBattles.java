@@ -62,7 +62,7 @@ public class SeaBattles implements BATHS
     
     /** returns true if War Chest <=0 and the admiral's squadron has no ships which 
      * can be retired. 
-     * @returns true if War Chest <=0 and the admiral's fleet has no ships 
+     * @return true if War Chest <=0 and the admiral's fleet has no ships 
      * which can be retired. 
      */
     public boolean isDefeated()
@@ -71,7 +71,7 @@ public class SeaBattles implements BATHS
     }
     
     /** returns the amount of money in the War Chest
-     * @returns the amount of money in the War Chest
+     * @return the amount of money in the War Chest
      */
     public double getWarChest()
     {
@@ -178,7 +178,7 @@ public class SeaBattles implements BATHS
 //**********************Encounters************************* 
     /** returns true if the number represents a encounter
      * @param num is the reference number of the encounter
-     * @returns true if the reference number represents a encounter, else false
+     * @return true if the reference number represents a encounter, else false
      **/
      public boolean isEncounter(int num)
      {
