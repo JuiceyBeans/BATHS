@@ -1,4 +1,4 @@
-package wars;
+package wars.api;
 
 import java.io.*;
 /**
