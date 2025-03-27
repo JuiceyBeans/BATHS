@@ -1,4 +1,4 @@
-package wars;
+package wars.api;
 
 /**
  * Represents the Admiral's war chest holding funds for commissioning ships,
