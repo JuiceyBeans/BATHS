@@ -41,7 +41,7 @@ public class QuartermasterGeneral {
         return 0;
     }
 
-    // Repairs/restocks a ship and returns the cost to be deducted.
+    // Repairs or restocks a ship and returns the cost to be deducted.
         public int serviceShip(Ship ship) {
             if (ship != null) {
                 // Calculate 10% of the ship's cost
