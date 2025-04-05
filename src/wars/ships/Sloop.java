@@ -3,7 +3,7 @@ package wars.ships;
 import wars.api.Ship;
 /**
  * Sloops can have a doctor or a pinnace
- * All s    loops have a battle skill of 5
+ * All sloops have a battle skill of 5
  * @author Karthi (Ayush) Suresh
  * @version 27/03/2025
  */
