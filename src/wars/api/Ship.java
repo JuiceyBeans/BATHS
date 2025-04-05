@@ -28,6 +28,8 @@ public class Ship {
         this.state = ShipState.RESERVE;
     }
 
+    // Fight checks
+
     /**
      * Whether the ship can fight blockade encounters
      * @return default: false
@@ -49,22 +51,6 @@ public class Ship {
      * @return default: false
      */
     public boolean canSkirmish() {
-        return false;
-    }
-
-    /**
-     * Whether the ship has a doctor
-     * @return default: false
-     */
-    public boolean hasDoctor() {
-        return false;
-    }
-
-    /**
-     * Whether the ship has a pinnace
-     * @return default: false
-     */
-    public boolean hasPinnace() {
         return false;
     }
 
