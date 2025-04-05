@@ -27,9 +27,9 @@ public class Teamwork
         details[5] = "Christopher";
         details[6] = "21050029";
 
-        details[7] = "surname of member3";
-        details[8] = "first name of member3";
-        details[9] = "SRN of member3";
+        details[7] = "Mpanga";
+        details[8] = "Samuel Leyton";
+        details[9] = "22045314";
 
 
         details[10] = "surname of member4";
