@@ -25,7 +25,7 @@ public class QuartermasterGeneral {
         public void disposeUnusableShips() {
         Iterator<Ship> iterator = reserveFleet.iterator();
         while (iterator.hasNext()) {
-            Ship ship = iterator.next();
+            Ship ship = iterator.next(); 
             if (ship.getStatus() == ShipState.SUNK) {
                 iterator.remove();
             }
