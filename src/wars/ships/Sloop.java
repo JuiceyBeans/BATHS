@@ -37,12 +37,10 @@ public class Sloop extends Ship {
         return true;
     }
 
-    @Override
     public boolean hasDoctor() {
         return this.hasDoctor;
     }
 
-    @Override
     public boolean hasPinnace() {
         return this.hasPinnace;
     }
