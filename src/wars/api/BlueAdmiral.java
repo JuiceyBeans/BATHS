@@ -1,4 +1,4 @@
-package wars;
+package wars.personalities;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class BlueAdmiral {
         return name;
     }
 
-    public int getWarChest() {
+    public int getwarChestBalance() {
         return warChest.getBalance();  // Get the balance from WarChest
     }
 

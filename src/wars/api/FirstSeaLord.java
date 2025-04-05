@@ -1,4 +1,4 @@
-package wars;
+package wars.personalities;
 
 import java.util.ArrayList;
 
