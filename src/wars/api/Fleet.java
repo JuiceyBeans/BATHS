@@ -92,7 +92,10 @@ public class Fleet {
 
     @Override
     public String toString() {
+        if (this.ships.isEmpty()) return "No ships";
+
         StringBuilder sb = new StringBuilder();
+
         sb.append("Fleet contains ").append(ships.size()).append(" ship(s):\n");
         for (Ship ship : ships) {
             sb.append(ship.getName()).append(" (State: ").append(ship.getState()).append(")\n");
