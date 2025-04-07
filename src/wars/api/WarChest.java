@@ -4,6 +4,12 @@ package wars.api;
  * Represents the Admiral's war chest holding funds for commissioning ships,
  * decommissioning them, and handling encounter prize money adjustments.
  */
+/**
+ * Enumeration class UnitState - write a description of the enum class here
+ * 
+ * @author Cheuk Yin Bosca Pang
+ * @version 03/4/2025
+ */
 public class WarChest {
     private int balance;
 
