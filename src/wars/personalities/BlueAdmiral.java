@@ -2,9 +2,6 @@ package wars.personalities;
 
 import wars.api.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class BlueAdmiral {
     private String name;
     private WarChest warChest;  
@@ -51,8 +48,12 @@ public class BlueAdmiral {
         warChest.deduct(amount);
     }
 
-    public boolean commissionShip(String shipName) {
-        // Commissions a ship from reserve into squadron.
+    /**
+     * Commissions a ship from reserve into squadron.
+     * @param shipName Name of ship
+     * @return Success/fail message + reason if fail
+     */
+    public String commissionShip(String shipName) {
         for (Ship ship : reserveFleet.getShipsByState(ShipState.RESERVE)) {
             if (ship.getName().equalsIgnoreCase(shipName)) {
                 int cost = ship.getCommissionFee();
@@ -61,27 +62,31 @@ public class BlueAdmiral {
                     ship.setState(ShipState.ACTIVE);
                     squadron.addShip(ship);
                     reserveFleet.removeShip(ship);
-                    return true;
-                }
-                return false; // Not enough money
+
+                    return "Successfully commissioned ship " + ship.getName();
+                } else return "Not enough funds to commission ship " + ship.getName();
             }
         }
-        return false; // Ship not found or not in reserve
+
+        return "Ship " + shipName + " not found";
     }
 
-    public boolean decommissionShip(String shipName) {
+    public String decommissionShip(String shipName) {
         // Decommissions a ship from squadron back to reserve.
         for (Ship ship : squadron.getShips()) {
-            if (ship.getName().equalsIgnoreCase(shipName) && ship.getState() != ShipState.SUNK) {
-                int refund = ship.getCommissionFee() / 2;  // Refund is half the cost
-                warChest.add(refund);  // Add the refund to the WarChest
-                ship.setState(ShipState.RESERVE);
-                reserveFleet.addShip(ship);
-                squadron.removeShip(ship);
-                return true;
+            if (ship.getName().equalsIgnoreCase(shipName)) {
+                if (ship.getState() != ShipState.SUNK) {
+                    int refund = ship.getCommissionFee() / 2;  // Refund is half the cost
+                    warChest.add(refund);  // Add the refund to the WarChest
+                    ship.setState(ShipState.RESERVE);
+                    reserveFleet.addShip(ship);
+                    squadron.removeShip(ship);
+                    return "Successfully decommissioned ship " + ship.getName();
+                }  else return "Ship " + ship.getName() + " is sunk and cannot be decommissioned";
             }
         }
-        return false; // Not found or sunk
+
+        return "Ship " + shipName + " not found";
     }
 
     /**
@@ -89,14 +94,14 @@ public class BlueAdmiral {
      * @param shipName ship's name
      * @return If ship is in a resting state, set it to active and return true
      */
-    public boolean restoreShip(String shipName) {
+    public String restoreShip(String shipName) {
         for (Ship ship : squadron.getShipsByState(ShipState.RESTING)) {
             if (ship.getName().equalsIgnoreCase(shipName)) {
                 ship.setState(ShipState.ACTIVE);
-                return true;
+                return "Ship " + ship.getName() + " successfully restored";
             }
         }
-        return false;
+        return "Ship " + shipName + " not found";
     }
 
     /**
