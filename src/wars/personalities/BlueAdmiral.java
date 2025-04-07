@@ -67,7 +67,7 @@ public class BlueAdmiral {
      * @return Success/fail message + reason if fail
      */
     public String commissionShip(String shipName) {
-        Ship ship = reserveFleet.getShip(shipName);
+        Ship ship = getShip(shipName);
 
         if (ship == null) {
             return "Not found";
