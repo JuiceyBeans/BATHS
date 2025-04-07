@@ -121,7 +121,7 @@ public class Encounter implements Serializable {
      */
     @Override
     public String toString() {
-        return "Encounter [id=" + id + ", type=" + type + ", location=" + location
-                + ", requiredSkill=" + requiredSkill + ", prizeMoney=" + prizeMoney + "]";
+        return "Encounter [ID: " + id + ", Type: " + type + ", Location: " + location
+                + ", Required battle skill: " + requiredSkill + ", Prize money: " + prizeMoney + "]";
     }
 }
