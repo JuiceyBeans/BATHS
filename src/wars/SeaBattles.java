@@ -256,6 +256,9 @@ public class SeaBattles implements BATHS
     /** reads data about encounters from a text file and stores in collection of 
      * encounters.Data in the file is editable
      * @param filename name of the file to be read
+
+     * @author Cheuk Yin Boca Pang
+     * @version 06/4/25
      */
     public void readEncounters(String filename)
     { 
@@ -264,29 +267,68 @@ public class SeaBattles implements BATHS
         
     }   
  
-    
+    private List<Encounter> encounters = new ArrayList<>();
+
     // ***************   file write/read  *********************
     /** Writes whole game to the specified file
      * @param fname name of file storing requests
      */
-    public void saveGame(String fname)
-    {   // uses object serialisation 
-           
+    // Reads encounter data from a text file and populates the encounters list.
+// Assumes each line is formatted as: id,type,location,requiredSkill,prizeMoney
+public void readEncounters(String filename) {
+    // Clear any existing encounters
+    encounters.clear();
+    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.trim().isEmpty()) continue; // Skip blank lines
+
+            // Split the line by commas
+            String[] tokens = line.split(",");
+            if (tokens.length < 5) {
+                System.err.println("Invalid encounter line: " + line);
+                continue;
+            }
+
+            int id = Integer.parseInt(tokens[0].trim());
+            // Convert the type string to an EncounterType (e.g., BLOCKADE, BATTLE, SKIRMISH)
+            EncounterType type = EncounterType.valueOf(tokens[1].trim().toUpperCase());
+            String location = tokens[2].trim();
+            int requiredSkill = Integer.parseInt(tokens[3].trim());
+            int prizeMoney = Integer.parseInt(tokens[4].trim());
+
+            // Create a new Encounter object and add it to the list
+            Encounter encounter = new Encounter(id, type, location, requiredSkill, prizeMoney);
+            encounters.add(encounter);
+        }
+        System.out.println("Encounters loaded successfully from " + filename);
+    } catch (IOException e) {
+        System.err.println("Error reading encounters: " + e.getMessage());
     }
-    
-    /** reads all information about the game from the specified file 
-     * and returns 
-     * @param fname name of file storing the game
-     * @return the game (as an SeaBattles object)
-     */
-    public SeaBattles loadGame(String fname)
-    {   // uses object serialisation 
-       
-        return null;
-    } 
-    
- 
 }
+
+// Saves the entire game state (this SeaBattles object) to a file using serialization.
+public void saveGame(String fname) {
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fname))) {
+        out.writeObject(this); // Save the entire object graph
+        System.out.println("Game saved successfully to " + fname);
+    } catch (IOException e) {
+        System.err.println("Error saving game: " + e.getMessage());
+    }
+}
+
+// Loads the game state from a file using serialization and returns the SeaBattles object.
+public SeaBattles loadGame(String fname) {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fname))) {
+        SeaBattles loadedGame = (SeaBattles) in.readObject();
+        System.out.println("Game loaded successfully from " + fname);
+        return loadedGame;
+    } catch (IOException | ClassNotFoundException e) {
+        System.err.println("Error loading game: " + e.getMessage());
+        return null;
+    }
+}
+
 
 
 
