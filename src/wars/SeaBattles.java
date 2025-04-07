@@ -1,8 +1,7 @@
 package wars;
 
-import wars.api.Encounter;
-import wars.api.EncounterType;
-import wars.api.Fleet;
+import wars.api.*;
+import wars.personalities.BlueAdmiral;
 import wars.ships.Frigate;
 import wars.ships.ManOWar;
 import wars.ships.Sloop;
@@ -20,8 +19,8 @@ import java.io.*;
 public class SeaBattles implements BATHS {
     // may have one HashMap and select on stat
 
-    private String admiral;
-    private double warChest;
+    private BlueAdmiral admiral;
+    private WarChest warChest;
 
 
 //**************** BATHS ************************** 
@@ -32,8 +31,6 @@ public class SeaBattles implements BATHS {
      * @param adm the name of the admiral
      */
     public SeaBattles(String adm) {
-
-
         setupShips();
         setupEncounters();
     }
@@ -47,8 +44,6 @@ public class SeaBattles implements BATHS {
      */
     public SeaBattles(String admir, String filename)  //Task 3
     {
-
-
         setupShips();
         // setupEncounters();
         // uncomment for testing Task
@@ -65,6 +60,7 @@ public class SeaBattles implements BATHS {
      * admiral, state of the warChest,whether defeated or not, and the ships currently in
      * the squadron,(or, "No ships" if squadron is empty), ships in the reserve fleet
      **/
+    //todo
     public String toString() {
 
         return "null";
@@ -79,7 +75,7 @@ public class SeaBattles implements BATHS {
      * which can be retired.
      */
     public boolean isDefeated() {
-        return false;
+        return admiral.isFired();
     }
 
     /**
@@ -88,7 +84,7 @@ public class SeaBattles implements BATHS {
      * @return the amount of money in the War Chest
      */
     public double getWarChest() {
-        return 0;
+        return warChest.getBalance();
     }
 
 
@@ -97,9 +93,10 @@ public class SeaBattles implements BATHS {
      *
      * @return a String representation of all ships in the reserve fleet
      **/
-    public String getReserveFleet() {   //assumes reserves is a Hashmap
-
-        return "No ships";
+    public String getReserveFleet() {
+        if (!admiral.getReserveFleet().getShips().isEmpty()) {
+            return admiral.getReserveFleet().toString();
+        } else return "No ships";
     }
 
     /**
@@ -109,9 +106,9 @@ public class SeaBattles implements BATHS {
      * @return a String representation of the ships in the admiral's fleet
      **/
     public String getSquadron() {
-
-
-        return "No ships";
+        if (!admiral.getSquadron().getShips().isEmpty()) {
+            return admiral.getSquadron().toString();
+        } else return "No ships";
     }
 
     /**
@@ -120,8 +117,9 @@ public class SeaBattles implements BATHS {
      * @return a String representation of the ships sunk
      **/
     public String getSunkShips() {
-
-        return "No ships";
+        if (!admiral.getSunkShips().getShips().isEmpty()) {
+            return admiral.getSunkShips().toString();
+        } else return "No ships";
     }
 
     /**
@@ -131,9 +129,15 @@ public class SeaBattles implements BATHS {
      * @return a String representation of the ships in the game
      **/
     public String getAllShips() {
+        ArrayList<Ship> allShips = new ArrayList<>();
 
+        allShips.addAll(admiral.getReserveFleet().getShips());
+        allShips.addAll(admiral.getSquadron().getShips());
+        allShips.addAll(admiral.getSunkShips().getShips());
 
-        return "No ships";
+        if (!allShips.isEmpty()) {
+            return allShips.toString();
+        } else return "No ships";
     }
 
 
@@ -143,7 +147,17 @@ public class SeaBattles implements BATHS {
      * @return details of any ship with the given name
      **/
     public String getShipDetails(String nme) {
+        ArrayList<Ship> allShips = new ArrayList<>();
 
+        allShips.addAll(admiral.getReserveFleet().getShips());
+        allShips.addAll(admiral.getSquadron().getShips());
+        allShips.addAll(admiral.getSunkShips().getShips());
+
+        for (Ship ship : allShips) {
+            if (ship.getName().equalsIgnoreCase(nme)) {
+                return ship.toString();
+            }
+        }
 
         return "\nNo such ship";
     }
