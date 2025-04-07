@@ -250,8 +250,26 @@ public class SeaBattles implements BATHS
     //*******************************************************************************
   
     /************************ Task 3 ************************************************/
-
     
+    private void setupEncounters() {
+    // Instantiate the encounters list
+    encounters = new ArrayList<>();
+
+    // Add sample encounters:
+    // Encounter format: id, EncounterType, location, requiredSkill, prizeMoney
+    
+    encounters.add(new Encounter(1, EncounterType.BATTLE, "Trafalgar", 3, 300));
+    encounters.add(new Encounter(2, EncounterType.SKIRMISH, "Belle Isle", 3, 120));
+    encounters.add(new Encounter(3, EncounterType.BLOCKADE, "Brest", 3, 150));
+    encounters.add(new Encounter(4, EncounterType.BATTLE, "St Malo", 9, 200));
+    encounters.add(new Encounter(5, EncounterType.BLOCKADE, "Dieppe", 7, 90));
+    encounters.add(new Encounter(6, EncounterType.SKIRMISH, "Jersey", 8, 45));
+    encounters.add(new Encounter(7, EncounterType.BLOCKADE, "Nantes", 6, 130));
+    encounters.add(new Encounter(8, EncounterType.BATTLE, "Finisterre", 4, 100));
+    encounters.add(new Encounter(9, EncounterType.SKIRMISH, "Biscay", 5, 200));
+    encounters.add(new Encounter(10, EncounterType.BATTLE, "Cadiz", 1, 250));
+}
+
     //******************************** Task 3.5 **********************************
     /** reads data about encounters from a text file and stores in collection of 
      * encounters.Data in the file is editable
