@@ -74,14 +74,14 @@ public class GameUI
                 System.out.println("Name of save file: ");
                 myIn.nextLine();
                 String ref = (myIn.nextLine()).trim();
-                myBattles.saveGame(ref);
+//                myBattles.saveGame(ref);
             }
             else if (choice == 10) // Task 7 only
             {
                 System.out.println("Name of save file: ");
                 myIn.nextLine();
                 String ref = (myIn.nextLine()).trim();
-                SeaBattles myBattles2=myBattles.loadGame(ref);
+//                SeaBattles myBattles2=myBattles.loadGame(ref);
                 //System.out.println(myBattles2.toString());
             }
         }
@@ -100,8 +100,8 @@ public class GameUI
         System.out.println("6. Restore a ship");
         System.out.println("7. Decommission a ship");
         System.out.println("8. View admiral's state");
-        System.out.println("9. Save this game");
-        System.out.println("10. Restore a game");
+//        System.out.println("9. Save this game");
+//        System.out.println("10. Restore a game");
        
         
         while (choice < 0 || choice  > 10)
