@@ -4,7 +4,7 @@ import wars.api.*;
 
 public class BlueAdmiral {
     private String name;
-    private WarChest warChest;  
+    private WarChest warChest;
     private Fleet squadron;
     private Fleet reserveFleet;
     private Fleet sunkShips;
@@ -21,7 +21,7 @@ public class BlueAdmiral {
         return name;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return warChest.getBalance();  // Get the balance from WarChest
     }
 
@@ -135,10 +135,10 @@ public class BlueAdmiral {
     }
 
     public boolean isFired() {
+        if (warChest.getBalance() >= 0) return false;  // Check if the war chest is still positive
+
         // Checks if the admiral has been fired.
         if (squadron.getShips().isEmpty()) return true; // No ships in squadron
-
-        if (warChest.getBalance() >= 0) return false;  // Check if the war chest is still positive
 
         for (Ship ship : squadron.getShips()) {
             if (ship.getState() != ShipState.SUNK) {

@@ -11,26 +11,26 @@ package wars.api;
  * @version 03/4/2025
  */
 public class WarChest {
-    private int balance;
+    private double balance;
 
     /**
      * @param initialBalance the starting amount of money
      */
-    public WarChest(int initialBalance) {
+    public WarChest(double initialBalance) {
         this.balance = initialBalance;
     }
 
     /**
      * @return the war chest balance
      */
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
     /**
      * @param amount the amount to add
      */
-    public void add(int amount) {
+    public void add(double amount) {
         balance += amount;
     }
 
@@ -41,7 +41,7 @@ public class WarChest {
      * 
      * @param amount the amount to deduct
      */
-    public void deduct(int amount) {
+    public void deduct(double amount) {
         balance -= amount;
     }
 
