@@ -54,25 +54,31 @@ public class BlueAdmiral {
      * @return Success/fail message + reason if fail
      */
     public String commissionShip(String shipName) {
-        for (Ship ship : reserveFleet.getShipsByState(ShipState.RESERVE)) {
+        for (Ship ship : reserveFleet.getShips()) {
             if (ship.getName().equalsIgnoreCase(shipName)) {
-                int cost = ship.getCommissionFee();
-                if (warChest.getBalance() >= cost) {  // Check if there are enough funds in the WarChest
-                    warChest.deduct(cost);  // Deduct the cost from the WarChest
-                    ship.setState(ShipState.ACTIVE);
-                    squadron.addShip(ship);
-                    reserveFleet.removeShip(ship);
+                if (ship.getState() == ShipState.RESERVE) {
+                    int cost = ship.getCommissionFee();
+                    if (warChest.getBalance() >= cost) {  // Check if there are enough funds in the WarChest
+                        warChest.deduct(cost);  // Deduct the cost from the WarChest
+                        ship.setState(ShipState.ACTIVE);
+                        squadron.addShip(ship);
+                        reserveFleet.removeShip(ship);
 
-                    return "Successfully commissioned ship " + ship.getName();
-                } else return "Not enough funds to commission ship " + ship.getName();
+                        return "Ship commissioned";
+                    } else return "Not enough money";
+                } else return "Not available";
             }
         }
-
-        return "Ship " + shipName + " not found";
+        return "Not found";
     }
 
-    public String decommissionShip(String shipName) {
-        // Decommissions a ship from squadron back to reserve.
+
+    /**
+     * Decommissions a ship from squadron back to reserve.
+     * @param shipName Name of ship
+     * @return true if the ship with the name is in the admiral's squadron, false otherwise
+     */
+    public boolean decommissionShip(String shipName) {
         for (Ship ship : squadron.getShips()) {
             if (ship.getName().equalsIgnoreCase(shipName)) {
                 if (ship.getState() != ShipState.SUNK) {
@@ -81,12 +87,12 @@ public class BlueAdmiral {
                     ship.setState(ShipState.RESERVE);
                     reserveFleet.addShip(ship);
                     squadron.removeShip(ship);
-                    return "Successfully decommissioned ship " + ship.getName();
-                }  else return "Ship " + ship.getName() + " is sunk and cannot be decommissioned";
+                    return true;
+                }  else return false;
             }
         }
 
-        return "Ship " + shipName + " not found";
+        return false;
     }
 
     /**
