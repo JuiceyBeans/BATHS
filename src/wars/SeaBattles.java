@@ -221,6 +221,10 @@ public class SeaBattles implements BATHS {
      * @return true if the reference number represents a encounter, else false
      **/
     public boolean isEncounter(int num) {
+        for (Encounter encounter : encounters) {
+            if (encounter.getId() == num)
+                return true;
+        }
         return false;
     }
 
@@ -258,7 +262,10 @@ public class SeaBattles implements BATHS {
      * the encounter number
      **/
     public String getEncounter(int num) {
-
+        for (Encounter encounter : encounters) {
+            if (encounter.getId() == num)
+                return encounter.toString();
+        }
         return "\nNo such encounter";
     }
 
@@ -268,8 +275,11 @@ public class SeaBattles implements BATHS {
      * @return returns a String representation of all encounters
      **/
     public String getAllEncounters() {
-
-        return "No encounters";
+        StringBuilder allEncounters = new StringBuilder();
+        for (Encounter encounter : encounters) {
+            allEncounters.append(encounter).append("\n");
+        }
+        return allEncounters.toString();
     }
 
 
@@ -284,21 +294,14 @@ public class SeaBattles implements BATHS {
 
     /************************ Task 3 ************************************************/
 
-    // In SeaBattles class, add these fields at the class level:
-    private Fleet fleet;                   // to store all ships
-    private List<Encounter> encounters;    // to store all encounters
+    private Fleet fleet;
+    private List<Encounter> encounters;
 
     private void setupShips() {
-        // Instantiate the fleet
         fleet = new Fleet();
-
-        // Create sample ships and add them to the fleet.
-        // Note: Adjust the parameters as appropriate for your design.
 
         // Man-O-War: "Victory" with battleSkill=3, marines=30, decks=3, cannons=4
         ManOWar victory = new ManOWar("Victory", 3, 30, 3, 4);
-        victory.setMarines(30);
-        victory.setDecks(3);
         fleet.addShip(victory);
 
         // Frigate: "Sophie" with 16 cannons, battleSkill=8, hasPinnace=true
@@ -307,8 +310,6 @@ public class SeaBattles implements BATHS {
 
         // Man-O-War: "Endeavour" with battleSkill=4, marines=20, decks=2, cannons=2
         ManOWar endeavour = new ManOWar("Endeavour", 4, 20, 2, 2);
-        endeavour.setMarines(20);
-        endeavour.setDecks(2);
         fleet.addShip(endeavour);
 
         // Sloop: "Arrow" with commissionFee=150, battleSkill=5 (sloops always have skill 5), hasDoctor=false, hasPinnace=true
@@ -317,8 +318,6 @@ public class SeaBattles implements BATHS {
 
         // Man-O-War: "Belerophon" with battleSkill=8, marines=50, decks=3, cannons=4
         ManOWar belerophon = new ManOWar("Belerophon", 8, 50, 3, 4);
-        belerophon.setMarines(50);
-        belerophon.setDecks(3);
         fleet.addShip(belerophon);
 
         // Frigate: "Surprise" with 10 cannons, battleSkill=6, hasPinnace=false
@@ -344,12 +343,9 @@ public class SeaBattles implements BATHS {
 
 
     private void setupEncounters() {
-        // Instantiate the encounters list
         encounters = new ArrayList<>();
 
-        // Add sample encounters:
         // Encounter format: id, EncounterType, location, requiredSkill, prizeMoney
-
         encounters.add(new Encounter(1, EncounterType.BATTLE, "Trafalgar", 3, 300));
         encounters.add(new Encounter(2, EncounterType.SKIRMISH, "Belle Isle", 3, 120));
         encounters.add(new Encounter(3, EncounterType.BLOCKADE, "Brest", 3, 150));
