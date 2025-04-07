@@ -1,22 +1,22 @@
 package wars.personalities;
 
-import wars.api.Encounter;
-import wars.api.Ship;
-import wars.api.ShipState;
-import wars.api.WarChest;
+import wars.api.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BlueAdmiral {
     private String name;
     private WarChest warChest;  
-    private ArrayList<Ship> squadron;
-    private ArrayList<Ship> reserveFleet;
+    private Fleet squadron;
+    private Fleet reserveFleet;
+    private Fleet sunkShips;
 
-    public BlueAdmiral(String name, ArrayList<Ship> reserveFleet) {
+    public BlueAdmiral(String name, Fleet reserveFleet) {
         this.name = name;
         this.reserveFleet = reserveFleet;
-        this.squadron = new ArrayList<>();
+        this.squadron = new Fleet();
+        this.sunkShips = new Fleet();
         this.warChest = new WarChest(1000);  // Initialize WarChest with the starting balance
     }
 
@@ -28,12 +28,17 @@ public class BlueAdmiral {
         return warChest.getBalance();  // Get the balance from WarChest
     }
 
-    public ArrayList<Ship> getSquadron() {
+    public Fleet getSquadron() {
         return squadron;
     }
 
-    public ArrayList<Ship> getReserveFleet() {
+    public Fleet getReserveFleet() {
         return reserveFleet;
+    }
+
+    //todo implement adding ships to sunk if battle is lost
+    public Fleet getSunkShips() {
+        return sunkShips;
     }
 
     // Add funds to the WarChest
@@ -48,14 +53,14 @@ public class BlueAdmiral {
 
     public boolean commissionShip(String shipName) {
         // Commissions a ship from reserve into squadron.
-        for (Ship ship : reserveFleet) {
-            if (ship.getName().equalsIgnoreCase(shipName) && ship.getState() == ShipState.RESERVE) {
+        for (Ship ship : reserveFleet.getShipsByState(ShipState.RESERVE)) {
+            if (ship.getName().equalsIgnoreCase(shipName)) {
                 int cost = ship.getCommissionFee();
                 if (warChest.getBalance() >= cost) {  // Check if there are enough funds in the WarChest
                     warChest.deduct(cost);  // Deduct the cost from the WarChest
                     ship.setState(ShipState.ACTIVE);
-                    squadron.add(ship);
-                    reserveFleet.remove(ship);
+                    squadron.addShip(ship);
+                    reserveFleet.removeShip(ship);
                     return true;
                 }
                 return false; // Not enough money
@@ -66,13 +71,13 @@ public class BlueAdmiral {
 
     public boolean decommissionShip(String shipName) {
         // Decommissions a ship from squadron back to reserve.
-        for (Ship ship : squadron) {
+        for (Ship ship : squadron.getShips()) {
             if (ship.getName().equalsIgnoreCase(shipName) && ship.getState() != ShipState.SUNK) {
                 int refund = ship.getCommissionFee() / 2;  // Refund is half the cost
                 warChest.add(refund);  // Add the refund to the WarChest
                 ship.setState(ShipState.RESERVE);
-                reserveFleet.add(ship);
-                squadron.remove(ship);
+                reserveFleet.addShip(ship);
+                squadron.removeShip(ship);
                 return true;
             }
         }
@@ -85,8 +90,8 @@ public class BlueAdmiral {
      * @return If ship is in a resting state, set it to active and return true
      */
     public boolean restoreShip(String shipName) {
-        for (Ship ship : squadron) {
-            if (ship.getName().equalsIgnoreCase(shipName) && ship.getState() == ShipState.RESTING) {
+        for (Ship ship : squadron.getShipsByState(ShipState.RESTING)) {
+            if (ship.getName().equalsIgnoreCase(shipName)) {
                 ship.setState(ShipState.ACTIVE);
                 return true;
             }
@@ -100,8 +105,8 @@ public class BlueAdmiral {
      * @return A suitable ship to fight supplied encounter
      */
     public Ship findSuitableShip(Encounter encounter) {
-        for (Ship ship : squadron) {
-            if (ship.getState() == ShipState.ACTIVE && ship.canFight(encounter.getType())) {
+        for (Ship ship : squadron.getShipsByState(ShipState.ACTIVE)) {
+            if (ship.canFight(encounter.getType())) {
                 return ship;
             }
         }
@@ -110,11 +115,11 @@ public class BlueAdmiral {
 
     public boolean isFired() {
         // Checks if the admiral has been fired.
-        if (squadron.isEmpty()) return true; // No ships in squadron
+        if (squadron.getShips().isEmpty()) return true; // No ships in squadron
 
         if (warChest.getBalance() >= 0) return false;  // Check if the war chest is still positive
 
-        for (Ship ship : squadron) {
+        for (Ship ship : squadron.getShips()) {
             if (ship.getState() != ShipState.SUNK) {
                 return false;  // Still has decommissionable ships
             }
