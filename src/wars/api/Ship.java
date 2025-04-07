@@ -54,6 +54,26 @@ public class Ship {
         return false;
     }
 
+    public boolean canFight(EncounterType encounterType) {
+        if (encounterType == EncounterType.BLOCKADE) {
+            return canBlockade();
+        }
+
+        if (encounterType == EncounterType.BATTLE) {
+            return canBattle();
+        }
+
+        if (encounterType == EncounterType.SKIRMISH) {
+            return canSkirmish();
+        }
+
+        if (encounterType == EncounterType.INVALID) {
+            throw new IllegalArgumentException("Encounter type is invalid");
+        }
+
+        return false;
+    }
+
     // Getters and Setters
     /**
      * @return Name of the ship
