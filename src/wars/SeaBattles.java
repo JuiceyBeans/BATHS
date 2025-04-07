@@ -33,9 +33,9 @@ public class SeaBattles implements BATHS {
      * @param adm the name of the admiral
      */
     public SeaBattles(String adm) {
+        admiral = new BlueAdmiral(adm, new Fleet());
         setupShips();
         setupEncounters();
-        admiral = new BlueAdmiral(adm, new Fleet());
     }
 
     /**
@@ -298,7 +298,7 @@ public class SeaBattles implements BATHS {
     private List<Encounter> encounters;
 
     private void setupShips() {
-        fleet = new Fleet();
+        fleet = admiral.getReserveFleet();
 
         // Man-O-War: "Victory" with battleSkill=3, marines=30, decks=3, cannons=4
         ManOWar victory = new ManOWar("Victory", 3, 30, 3, 4);
@@ -409,7 +409,7 @@ public class SeaBattles implements BATHS {
      *
      * @param fname name of file storing requests
      */
-    // Saves the entire game state (this SeaBattles object) to a file using serialization.
+    // Saves the entire game state to a file using serialization.
     public void saveGame(String fname) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fname))) {
             out.writeObject(this); // Save the entire object graph
