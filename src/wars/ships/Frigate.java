@@ -14,7 +14,6 @@ public class Frigate extends Ship {
         this.hasPinnace = hasPinnace;
     }
 
-    @Override
     public boolean hasPinnace() {
         return this.hasPinnace;
     }
