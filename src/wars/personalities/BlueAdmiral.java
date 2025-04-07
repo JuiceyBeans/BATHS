@@ -38,6 +38,19 @@ public class BlueAdmiral {
         return sunkShips;
     }
 
+    public Ship getShip(String name) {
+        Ship ship;
+
+        ship = getSquadron().getShip(name);
+        if (ship != null) return ship;
+
+        ship = getReserveFleet().getShip(name);
+        if (ship != null) return ship;
+
+        ship = getSunkShips().getShip(name);
+        return ship;
+    }
+
     // Add funds to the WarChest
     public void addToWarChest(int amount) {
         warChest.add(amount);
@@ -54,22 +67,23 @@ public class BlueAdmiral {
      * @return Success/fail message + reason if fail
      */
     public String commissionShip(String shipName) {
-        for (Ship ship : reserveFleet.getShips()) {
-            if (ship.getName().equalsIgnoreCase(shipName)) {
-                if (ship.getState() == ShipState.RESERVE) {
-                    int cost = ship.getCommissionFee();
-                    if (warChest.getBalance() >= cost) {  // Check if there are enough funds in the WarChest
-                        warChest.deduct(cost);  // Deduct the cost from the WarChest
-                        ship.setState(ShipState.ACTIVE);
-                        squadron.addShip(ship);
-                        reserveFleet.removeShip(ship);
+        Ship ship = reserveFleet.getShip(shipName);
 
-                        return "Ship commissioned";
-                    } else return "Not enough money";
-                } else return "Not available";
-            }
+        if (ship == null) {
+            return "Not found";
         }
-        return "Not found";
+
+        if (ship.getState() == ShipState.RESERVE) {
+            int cost = ship.getCommissionFee();
+            if (warChest.getBalance() >= cost) {  // Check if there are enough funds in the WarChest
+                warChest.deduct(cost);  // Deduct the cost from the WarChest
+                ship.setState(ShipState.ACTIVE);
+                squadron.addShip(ship);
+                reserveFleet.removeShip(ship);
+
+                return "Ship commissioned";
+            } else return "Not enough money";
+        } else return "Not available";
     }
 
 
@@ -79,35 +93,31 @@ public class BlueAdmiral {
      * @return true if the ship with the name is in the admiral's squadron, false otherwise
      */
     public boolean decommissionShip(String shipName) {
-        for (Ship ship : squadron.getShips()) {
-            if (ship.getName().equalsIgnoreCase(shipName)) {
-                if (ship.getState() != ShipState.SUNK) {
-                    int refund = ship.getCommissionFee() / 2;  // Refund is half the cost
-                    warChest.add(refund);  // Add the refund to the WarChest
-                    ship.setState(ShipState.RESERVE);
-                    reserveFleet.addShip(ship);
-                    squadron.removeShip(ship);
-                    return true;
-                }  else return false;
-            }
-        }
+        Ship ship = squadron.getShip(shipName);
 
-        return false;
+        if (ship.getState() != ShipState.SUNK) {
+            int refund = ship.getCommissionFee() / 2;  // Refund is half the cost
+            warChest.add(refund);  // Add the refund to the WarChest
+            ship.setState(ShipState.RESERVE);
+            reserveFleet.addShip(ship);
+            squadron.removeShip(ship);
+            return true;
+        }  else return false;
     }
 
     /**
      * Restores a resting ship back to active.
+     *
      * @param shipName ship's name
-     * @return If ship is in a resting state, set it to active and return true
      */
-    public String restoreShip(String shipName) {
-        for (Ship ship : squadron.getShipsByState(ShipState.RESTING)) {
-            if (ship.getName().equalsIgnoreCase(shipName)) {
-                ship.setState(ShipState.ACTIVE);
-                return "Ship " + ship.getName() + " successfully restored";
-            }
+    public void restoreShip(String shipName) {
+        Ship ship = squadron.getShip(shipName);
+
+        if (ship == null) return;
+
+        if (ship.getState() == ShipState.RESTING) {
+            ship.setState(ShipState.ACTIVE);
         }
-        return "Ship " + shipName + " not found";
     }
 
     /**

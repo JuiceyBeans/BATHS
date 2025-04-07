@@ -147,19 +147,10 @@ public class SeaBattles implements BATHS {
      * @return details of any ship with the given name
      **/
     public String getShipDetails(String nme) {
-        ArrayList<Ship> allShips = new ArrayList<>();
+        Ship ship = admiral.getShip(nme);
+        if (ship == null) return "\nNo such ship";
 
-        allShips.addAll(admiral.getReserveFleet().getShips());
-        allShips.addAll(admiral.getSquadron().getShips());
-        allShips.addAll(admiral.getSunkShips().getShips());
-
-        for (Ship ship : allShips) {
-            if (ship.getName().equalsIgnoreCase(nme)) {
-                return ship.toString();
-            }
-        }
-
-        return "\nNo such ship";
+        return ship.toString();
     }
 
     // ***************** Fleet Ships ************************   
@@ -175,8 +166,7 @@ public class SeaBattles implements BATHS {
      * enough money" if not enough money in the warChest
      **/
     public String commissionShip(String nme) {
-
-        return "- Ship not found";
+        return admiral.commissionShip(nme);
     }
 
     /**
@@ -186,7 +176,7 @@ public class SeaBattles implements BATHS {
      * @return returns true if the ship with the name is in the admiral's squadron, false otherwise.
      **/
     public boolean isInSquadron(String nme) {
-        return false;
+        return admiral.getSquadron().getShip(nme) != null;
     }
 
     /**
@@ -197,7 +187,9 @@ public class SeaBattles implements BATHS {
      * @return true if ship decommissioned, else false
      **/
     public boolean decommissionShip(String nme) {
-        return false;
+        if (isInSquadron(nme)) {
+            return admiral.decommissionShip(nme);
+        } else return false;
     }
 
 
@@ -207,8 +199,7 @@ public class SeaBattles implements BATHS {
      * @param ref the name of the ship to be restored
      */
     public void restoreShip(String ref) {
-
-
+        admiral.restoreShip(ref);
     }
 
 //**********************Encounters************************* 

@@ -1,5 +1,7 @@
 package wars.api;
 
+import wars.personalities.BlueAdmiral;
+
 /**
  * Ship class. Idk fill this out later
  * @author Karthi (Ayush) Suresh
@@ -10,14 +12,14 @@ public class Ship {
     // todo uncomment all lines related to captain once implemented
 
     private String name;
-    //    private BlueAdmiral captain;
+    private BlueAdmiral captain;
     private int commissionFee;
     private final int battleSkill;
     private ShipState state;
 
-    public Ship(String name, /*BlueAdmiral captain,*/ int commissionFee, int battleSkill) {
+    public Ship(String name, BlueAdmiral captain, int commissionFee, int battleSkill) {
         this.name = name;
-//        this.captain = captain;
+        this.captain = captain;
         this.commissionFee = commissionFee;
 
         if (battleSkill < 0 || battleSkill > 10) {
@@ -90,13 +92,13 @@ public class Ship {
         this.name = name;
     }
 
-//    public BlueAdmiral getCaptain() {
-//        return captain;
-//    }
+    public BlueAdmiral getCaptain() {
+        return captain;
+    }
 
-//    public void setCaptain(BlueAdmiral captain) {
-//        this.captain = captain;
-//    }
+    public void setCaptain(BlueAdmiral captain) {
+        this.captain = captain;
+    }
 
     /**
      * @return Name of the ship

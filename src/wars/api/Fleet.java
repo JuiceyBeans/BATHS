@@ -34,6 +34,17 @@ public class Fleet {
         this.ships.remove(ship);
     }
 
+    public Ship getShip(String name) {
+        for (Ship ship : this.getShips()) {
+            if (ship.getName().equalsIgnoreCase(name)) {
+                return ship;
+            }
+        }
+
+        return null;
+        //throw new IllegalArgumentException("Ship not found");
+    }
+
     /**
      * @return List of all ships in the fleet.
      */
