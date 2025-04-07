@@ -24,7 +24,7 @@ public class BlueAdmiral {
         return name;
     }
 
-    public int getwarChestBalance() {
+    public int getBalance() {
         return warChest.getBalance();  // Get the balance from WarChest
     }
 
@@ -79,8 +79,12 @@ public class BlueAdmiral {
         return false; // Not found or sunk
     }
 
+    /**
+     * Restores a resting ship back to active.
+     * @param shipName ship's name
+     * @return If ship is in a resting state, set it to active and return true
+     */
     public boolean restoreShip(String shipName) {
-        // Restores a resting ship back to active.
         for (Ship ship : squadron) {
             if (ship.getName().equalsIgnoreCase(shipName) && ship.getState() == ShipState.RESTING) {
                 ship.setState(ShipState.ACTIVE);
@@ -90,8 +94,12 @@ public class BlueAdmiral {
         return false;
     }
 
+    /**
+     * Finds a suitable ship for the encounter.
+     * @param encounter Encounter
+     * @return A suitable ship to fight supplied encounter
+     */
     public Ship findSuitableShip(Encounter encounter) {
-        // Finds a suitable ship for the encounter.
         for (Ship ship : squadron) {
             if (ship.getState() == ShipState.ACTIVE && ship.canFight(encounter.getType())) {
                 return ship;
