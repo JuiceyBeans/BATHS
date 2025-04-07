@@ -1,14 +1,16 @@
 package wars;
 
-import wars.api.Encounter;
-import wars.api.EncounterType;
-import wars.api.Fleet;
+import wars.api.*;
+import wars.personalities.BlueAdmiral;
 import wars.ships.Frigate;
 import wars.ships.ManOWar;
 import wars.ships.Sloop;
 
 import java.util.*;
 import java.io.*;
+
+import static java.lang.String.valueOf;
+
 /**
  * This class implements the behaviour expected from the BATHS
  system as required for 5COM2007 Cwk1B BATHS - Feb 2025
@@ -20,8 +22,7 @@ import java.io.*;
 public class SeaBattles implements BATHS {
     // may have one HashMap and select on stat
 
-    private String admiral;
-    private double warChest;
+    private BlueAdmiral admiral;
 
 
 //**************** BATHS ************************** 
@@ -32,8 +33,7 @@ public class SeaBattles implements BATHS {
      * @param adm the name of the admiral
      */
     public SeaBattles(String adm) {
-
-
+        admiral = new BlueAdmiral(adm, new Fleet());
         setupShips();
         setupEncounters();
     }
@@ -47,12 +47,10 @@ public class SeaBattles implements BATHS {
      */
     public SeaBattles(String admir, String filename)  //Task 3
     {
-
-
         setupShips();
-        // setupEncounters();
+        setupEncounters();
         // uncomment for testing Task
-        // readEncounters(filename);
+        readEncounters(filename);
     }
 
 
@@ -65,9 +63,26 @@ public class SeaBattles implements BATHS {
      * admiral, state of the warChest,whether defeated or not, and the ships currently in
      * the squadron,(or, "No ships" if squadron is empty), ships in the reserve fleet
      **/
+    //todo
     public String toString() {
+        StringBuilder details = new StringBuilder();
 
-        return "null";
+        String name = admiral.getName();
+        double balance = getWarChest();
+        String isDefeated;
+
+        if (!isDefeated()) {
+            isDefeated =  "Is OK";
+        } else isDefeated = "Is Defeated";
+
+        details.append("Name: ").append(name);
+        details.append("\nWar Chest balance: ").append(balance);
+
+        details.append("\nIs defeated?: ").append(isDefeated);
+        details.append("\nShips in squadron: ").append(getSquadron());
+        details.append("\nShips in reserve: ").append(getReserveFleet());
+
+        return details.toString();
     }
 
 
@@ -79,7 +94,7 @@ public class SeaBattles implements BATHS {
      * which can be retired.
      */
     public boolean isDefeated() {
-        return false;
+        return admiral.isFired();
     }
 
     /**
@@ -88,7 +103,7 @@ public class SeaBattles implements BATHS {
      * @return the amount of money in the War Chest
      */
     public double getWarChest() {
-        return 0;
+        return admiral.getBalance();
     }
 
 
@@ -97,9 +112,8 @@ public class SeaBattles implements BATHS {
      *
      * @return a String representation of all ships in the reserve fleet
      **/
-    public String getReserveFleet() {   //assumes reserves is a Hashmap
-
-        return "No ships";
+    public String getReserveFleet() {
+        return admiral.getReserveFleet().toString();
     }
 
     /**
@@ -109,9 +123,7 @@ public class SeaBattles implements BATHS {
      * @return a String representation of the ships in the admiral's fleet
      **/
     public String getSquadron() {
-
-
-        return "No ships";
+        return admiral.getSquadron().toString();
     }
 
     /**
@@ -120,8 +132,7 @@ public class SeaBattles implements BATHS {
      * @return a String representation of the ships sunk
      **/
     public String getSunkShips() {
-
-        return "No ships";
+        return admiral.getSunkShips().toString();
     }
 
     /**
@@ -131,9 +142,12 @@ public class SeaBattles implements BATHS {
      * @return a String representation of the ships in the game
      **/
     public String getAllShips() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Reserve fleet details: ").append(admiral.getReserveFleet().toString());
+        sb.append("\nSquadron details: ").append(admiral.getSquadron().toString());
+        sb.append("\nSunk details: ").append(admiral.getSunkShips().toString());
 
-
-        return "No ships";
+        return sb.toString();
     }
 
 
@@ -143,9 +157,10 @@ public class SeaBattles implements BATHS {
      * @return details of any ship with the given name
      **/
     public String getShipDetails(String nme) {
+        Ship ship = admiral.getShip(nme);
+        if (ship == null) return "\nNo such ship";
 
-
-        return "\nNo such ship";
+        return ship.toString();
     }
 
     // ***************** Fleet Ships ************************   
@@ -161,8 +176,7 @@ public class SeaBattles implements BATHS {
      * enough money" if not enough money in the warChest
      **/
     public String commissionShip(String nme) {
-
-        return "- Ship not found";
+        return admiral.commissionShip(nme);
     }
 
     /**
@@ -172,7 +186,7 @@ public class SeaBattles implements BATHS {
      * @return returns true if the ship with the name is in the admiral's squadron, false otherwise.
      **/
     public boolean isInSquadron(String nme) {
-        return false;
+        return admiral.getSquadron().getShip(nme) != null;
     }
 
     /**
@@ -183,7 +197,9 @@ public class SeaBattles implements BATHS {
      * @return true if ship decommissioned, else false
      **/
     public boolean decommissionShip(String nme) {
-        return false;
+        if (isInSquadron(nme)) {
+            return admiral.decommissionShip(nme);
+        } else return false;
     }
 
 
@@ -193,8 +209,7 @@ public class SeaBattles implements BATHS {
      * @param ref the name of the ship to be restored
      */
     public void restoreShip(String ref) {
-
-
+        admiral.restoreShip(ref);
     }
 
 //**********************Encounters************************* 
@@ -206,6 +221,10 @@ public class SeaBattles implements BATHS {
      * @return true if the reference number represents a encounter, else false
      **/
     public boolean isEncounter(int num) {
+        for (Encounter encounter : encounters) {
+            if (encounter.getId() == num)
+                return true;
+        }
         return false;
     }
 
@@ -243,7 +262,10 @@ public class SeaBattles implements BATHS {
      * the encounter number
      **/
     public String getEncounter(int num) {
-
+        for (Encounter encounter : encounters) {
+            if (encounter.getId() == num)
+                return encounter.toString();
+        }
         return "\nNo such encounter";
     }
 
@@ -253,8 +275,11 @@ public class SeaBattles implements BATHS {
      * @return returns a String representation of all encounters
      **/
     public String getAllEncounters() {
-
-        return "No encounters";
+        StringBuilder allEncounters = new StringBuilder();
+        for (Encounter encounter : encounters) {
+            allEncounters.append(encounter).append("\n");
+        }
+        return allEncounters.toString();
     }
 
 
@@ -269,21 +294,14 @@ public class SeaBattles implements BATHS {
 
     /************************ Task 3 ************************************************/
 
-    // In SeaBattles class, add these fields at the class level:
-    private Fleet fleet;                   // to store all ships
-    private List<Encounter> encounters;    // to store all encounters
+    private Fleet fleet;
+    private List<Encounter> encounters;
 
     private void setupShips() {
-        // Instantiate the fleet
-        fleet = new Fleet();
-
-        // Create sample ships and add them to the fleet.
-        // Note: Adjust the parameters as appropriate for your design.
+        fleet = admiral.getReserveFleet();
 
         // Man-O-War: "Victory" with battleSkill=3, marines=30, decks=3, cannons=4
         ManOWar victory = new ManOWar("Victory", 3, 30, 3, 4);
-        victory.setMarines(30);
-        victory.setDecks(3);
         fleet.addShip(victory);
 
         // Frigate: "Sophie" with 16 cannons, battleSkill=8, hasPinnace=true
@@ -292,8 +310,6 @@ public class SeaBattles implements BATHS {
 
         // Man-O-War: "Endeavour" with battleSkill=4, marines=20, decks=2, cannons=2
         ManOWar endeavour = new ManOWar("Endeavour", 4, 20, 2, 2);
-        endeavour.setMarines(20);
-        endeavour.setDecks(2);
         fleet.addShip(endeavour);
 
         // Sloop: "Arrow" with commissionFee=150, battleSkill=5 (sloops always have skill 5), hasDoctor=false, hasPinnace=true
@@ -302,8 +318,6 @@ public class SeaBattles implements BATHS {
 
         // Man-O-War: "Belerophon" with battleSkill=8, marines=50, decks=3, cannons=4
         ManOWar belerophon = new ManOWar("Belerophon", 8, 50, 3, 4);
-        belerophon.setMarines(50);
-        belerophon.setDecks(3);
         fleet.addShip(belerophon);
 
         // Frigate: "Surprise" with 10 cannons, battleSkill=6, hasPinnace=false
@@ -329,12 +343,9 @@ public class SeaBattles implements BATHS {
 
 
     private void setupEncounters() {
-        // Instantiate the encounters list
         encounters = new ArrayList<>();
 
-        // Add sample encounters:
         // Encounter format: id, EncounterType, location, requiredSkill, prizeMoney
-
         encounters.add(new Encounter(1, EncounterType.BATTLE, "Trafalgar", 3, 300));
         encounters.add(new Encounter(2, EncounterType.SKIRMISH, "Belle Isle", 3, 120));
         encounters.add(new Encounter(3, EncounterType.BLOCKADE, "Brest", 3, 150));
@@ -398,7 +409,7 @@ public class SeaBattles implements BATHS {
      *
      * @param fname name of file storing requests
      */
-    // Saves the entire game state (this SeaBattles object) to a file using serialization.
+    // Saves the entire game state to a file using serialization.
     public void saveGame(String fname) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fname))) {
             out.writeObject(this); // Save the entire object graph

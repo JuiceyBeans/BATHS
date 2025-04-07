@@ -34,6 +34,17 @@ public class Fleet {
         this.ships.remove(ship);
     }
 
+    public Ship getShip(String name) {
+        for (Ship ship : this.getShips()) {
+            if (ship.getName().equalsIgnoreCase(name)) {
+                return ship;
+            }
+        }
+
+        return null;
+        //throw new IllegalArgumentException("Ship not found");
+    }
+
     /**
      * @return List of all ships in the fleet.
      */
@@ -81,7 +92,10 @@ public class Fleet {
 
     @Override
     public String toString() {
+        if (this.ships.isEmpty()) return "No ships";
+
         StringBuilder sb = new StringBuilder();
+
         sb.append("Fleet contains ").append(ships.size()).append(" ship(s):\n");
         for (Ship ship : ships) {
             sb.append(ship.getName()).append(" (State: ").append(ship.getState()).append(")\n");

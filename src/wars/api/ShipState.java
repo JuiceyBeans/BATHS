@@ -9,10 +9,10 @@ import java.io.*;
  */
 public enum ShipState implements Serializable
 {
-    RESERVE(" In reserve fleet"),
-    ACTIVE(" Active in squadron"),
-    RESTING(" Resting"),
-    SUNK (" Sunk");
+    RESERVE("In reserve fleet"),
+    ACTIVE("Active in squadron"),
+    RESTING("Resting"),
+    SUNK ("Sunk");
 
     private String state;
     

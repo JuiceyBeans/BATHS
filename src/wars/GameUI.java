@@ -17,8 +17,8 @@ public class GameUI
     {
         int choice;
         System.out.println("Enter admiral's name");
-        String name = myIn.nextLine();
-        myBattles = new SeaBattles(name); // create
+        String admiralName = myIn.nextLine();
+        myBattles = new SeaBattles(admiralName); // create
         
         choice = 100;
         while (choice != 0 )
@@ -34,57 +34,63 @@ public class GameUI
             }
             else if (choice == 3)
             {
-                System.out.println("Enter Ship name");
+                System.out.println("Enter ship's name");
                 myIn.nextLine();
                 String ref = (myIn.nextLine()).trim();
                 System.out.println(myBattles.getShipDetails(ref));
             } 
             else if (choice == 4)
             {
-                //write your code here
+                System.out.println("Enter ship's name");
+                myIn.nextLine();
+                String ref = (myIn.nextLine()).trim();
+                myBattles.commissionShip(ref);
 
             }
             else if (choice == 5)
             {
-       	       //write your code here
-       
-                  
+                myIn.nextLine();
+                int ref = (myIn.nextInt());
+       	        myBattles.fightEncounter(ref);
             }
             else if (choice ==6)
             {
-	        //write your code here
-
-
+                myIn.nextLine();
+                String ref = (myIn.nextLine()).trim();
+                myBattles.restoreShip(ref);
             }
             else if (choice == 7)
             {
-                //write your code here
-
-
+                myIn.nextLine();
+                String ref = (myIn.nextLine()).trim();
+                myBattles.decommissionShip(ref);
             }
             else if (choice==8)
             {
                 System.out.println(myBattles.toString());
             }
-//            else if (choice == 9) // Task 7 only
-//            {
-//                System.out.println("Write to file");
-//                myBattles.saveGame("olenka.dat");
-//            }
-//            else if (choice == 10) // Task 7 only
-//            {
-//                System.out.println("Recommission from file");
-//                SeaBattles myBattles2=null;
-//                myBattles2.loadGame("olenka.dat");
-//                System.out.println(myBattles2.toString());               
-//            }  
+            else if (choice == 9) // Task 7 only
+            {
+                System.out.println("Name of save file: ");
+                myIn.nextLine();
+                String ref = (myIn.nextLine()).trim();
+//                myBattles.saveGame(ref);
+            }
+            else if (choice == 10) // Task 7 only
+            {
+                System.out.println("Name of save file: ");
+                myIn.nextLine();
+                String ref = (myIn.nextLine()).trim();
+//                SeaBattles myBattles2=myBattles.loadGame(ref);
+                //System.out.println(myBattles2.toString());
+            }
         }
         System.out.println("Thank-you");
     }
     
     private int getMenuItem()
     {   int choice = 100;  
-        System.out.println("Main Menu");
+        System.out.println("\nMain Menu");
         System.out.println("0. Quit");
         System.out.println("1. List ships in the reserve fleet");
         System.out.println("2. List ships in admirals squadron"); 
@@ -94,8 +100,8 @@ public class GameUI
         System.out.println("6. Restore a ship");
         System.out.println("7. Decommission a ship");
         System.out.println("8. View admiral's state");
-        System.out.println("9. Save this game");
-        System.out.println("10. Restore a game");
+//        System.out.println("9. Save this game");
+//        System.out.println("10. Restore a game");
        
         
         while (choice < 0 || choice  > 10)
