@@ -17,9 +17,8 @@ public class Ship {
     private final int battleSkill;
     private ShipState state;
 
-    public Ship(String name, BlueAdmiral captain, int commissionFee, int battleSkill) {
+    public Ship(String name, int commissionFee, int battleSkill) {
         this.name = name;
-        this.captain = captain;
         this.commissionFee = commissionFee;
 
         if (battleSkill < 0 || battleSkill > 10) {
