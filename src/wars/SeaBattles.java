@@ -250,7 +250,66 @@ public class SeaBattles implements BATHS
     //*******************************************************************************
   
     /************************ Task 3 ************************************************/
+    * @author Cheuk Yin Bocsa Pang
+    * @version 07/04/25
+    private Fleet fleet;                   // to store all ships
+    private List<Encounter> encounters;    // to store all encounters
+    private void setupShips() {
+    // Instantiate the fleet
+    fleet = new Fleet();
 
+    // Create sample ships and add them to the fleet.
+    // Note: Adjust the parameters as appropriate for your design.
+    
+    // Man-O-War: "Victory" with battleSkill=3, marines=30, decks=3, cannons=4 
+    ManOWar victory = new ManOWar("Victory", 3, 30, 3, 4);
+    // Optionally set extra details if needed:
+    victory.setMarines(30);
+    victory.setDecks(3);
+    fleet.addShip(victory);
+
+    // Frigate: "Sophie" with 16 cannons, battleSkill=8, hasPinnace=true
+    Frigate sophie = new Frigate("Sophie", 16, 8, true);
+    fleet.addShip(sophie);
+
+    // Man-O-War: "Endeavour" with battleSkill=4, marines=20, decks=2, cannons=2
+    ManOWar endeavour = new ManOWar("Endeavour", 4, 20, 2, 2);
+    endeavour.setMarines(20);
+    endeavour.setDecks(2);
+    fleet.addShip(endeavour);
+
+    // Sloop: "Arrow" with commissionFee=150, battleSkill=5 (sloops always have skill 5), hasDoctor=false, hasPinnace=true
+    Sloop arrow = new Sloop("Arrow", 150, false, true);
+    fleet.addShip(arrow);
+
+    // Man-O-War: "Belerophon" with battleSkill=8, marines=50, decks=3, cannons=4
+    ManOWar belerophon = new ManOWar("Belerophon", 8, 50, 3, 4);
+    belerophon.setMarines(50);
+    belerophon.setDecks(3);
+    fleet.addShip(belerophon);
+
+    // Frigate: "Surprise" with 10 cannons, battleSkill=6, hasPinnace=false
+    Frigate surprise = new Frigate("Surprise", 10, 6, false);
+    fleet.addShip(surprise);
+
+    // Frigate: "Jupiter" with 20 cannons, battleSkill=7, hasPinnace=false
+    Frigate jupiter = new Frigate("Jupiter", 20, 7, false);
+    fleet.addShip(jupiter);
+
+    // Sloop: "Paris" with commissionFee=200, battleSkill=5, hasPinnace=true (using constructor without hasDoctor)
+    Sloop paris = new Sloop("Paris", 200, true);
+    fleet.addShip(paris);
+
+    // Sloop: "Beast" with commissionFee=400, battleSkill=5, hasDoctor=false, hasPinnace=false
+    Sloop beast = new Sloop("Beast", 400, false, false);
+    fleet.addShip(beast);
+
+    // Sloop: "Athena" with commissionFee=100, battleSkill=5, hasDoctor=true, hasPinnace=true
+    Sloop athena = new Sloop("Athena", 100, true, true);
+    fleet.addShip(athena);
+}
+
+   
     
     //******************************** Task 3.5 **********************************
     /** reads data about encounters from a text file and stores in collection of 
