@@ -23,18 +23,18 @@ public class Teamwork
         details[2] = "Z";
         details[3] = "23012077";
 
-        details[4] = "Obuobi";
-        details[5] = "Christopher";
-        details[6] = "21050029";
+        details[4] = "Leyton Mpanga";
+        details[5] = "Samuel";
+        details[6] = "22204531";
 
-        details[7] = "Pang";
-        details[8] = "Cheuk Yin Bosca";
-        details[9] = "23014216";
+        details[7] = "Obuobi";
+        details[8] = "Christopher";
+        details[9] = "21050029";
 
 
-        details[10] = "Leyton Mpanga";
-        details[11] = "Samuel";
-        details[12] = "22204531";
+        details[10] = "Pang";
+        details[11] = "Cheuk Yin Bosca";
+        details[12] = "23014216";
 
 	
 	   // only if applicable
