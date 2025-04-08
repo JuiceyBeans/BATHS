@@ -99,8 +99,8 @@ public class BlueAdmiral {
             int refund = ship.getCommissionFee() / 2;  // Refund is half the cost
             warChest.add(refund);  // Add the refund to the WarChest
             ship.setState(ShipState.RESERVE);
-            this.getReserveFleet().addShip(ship);
-            this.getSquadron().removeShip(ship);
+            reserveFleet.addShip(ship);
+            squadron.removeShip(ship);
             return true;
         }  else return false;
     }
@@ -111,14 +111,14 @@ public class BlueAdmiral {
      * @param shipName ship's name
      */
     public void restoreShip(String shipName) {
-        Ship ship = squadron.getShip(shipName);
+        Ship ship = reserveFleet.getShip(shipName);
 
         if (ship == null) return;
 
         if (ship.getState() == ShipState.RESTING) {
             ship.setState(ShipState.ACTIVE);
-            this.getReserveFleet().removeShip(ship);
-            this.getSquadron().addShip(ship);
+            reserveFleet.removeShip(ship);
+            squadron.addShip(ship);
         }
     }
 
