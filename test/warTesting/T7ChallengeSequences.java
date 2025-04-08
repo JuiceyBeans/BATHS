@@ -51,7 +51,7 @@ public class T7ChallengeSequences {
         game.commissionShip("Victory");
         game.fightEncounter(5);  //should be sunk
         String actual = game.fightEncounter(5); //re-used ?
-        assertTrue(actual.contains("no ship"));
+        assertTrue(actual.contains("no suitable ship"));
     }
     
     @Test
@@ -80,7 +80,7 @@ public class T7ChallengeSequences {
         game.decommissionShip("Sophie");
         String actual =game.fightEncounter(1);
         
-        assertTrue(actual.contains("no ship"));
+        assertTrue(actual.contains("no suitable ship"));
     }
  
     
@@ -91,7 +91,7 @@ public class T7ChallengeSequences {
         game.commissionShip("Beast");
         game.fightEncounter(7);  //lose
         String actual = game.fightEncounter(6);   //lose , all sunk
-        assertTrue(actual.contains("defeated"));
+        assertTrue(actual.contains("lose your job"));
     }
     
     @Test
