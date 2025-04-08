@@ -119,7 +119,7 @@ public interface BATHS extends Serializable
       * 0-Encounter won by...(ship reference and name)-add prize money to War 
       * Chest and set ship's state to RESTING,  
       * 1-Encounter lost as no ship available - deduct prize from the War Chest,
-      * 2-Encounter lost on battle skill and (ship name) sunk" - deduct prize 
+      * 2-Encounter lost on skill level and (ship name) sunk" - deduct prize 
       * from War Chest and set ship state to SUNK.
       * If an encounter is lost and admiral is completely defeated because there 
       * are no ships to decommission,add "You have been defeated " to message, 

@@ -236,7 +236,7 @@ public class SeaBattles implements BATHS {
      * 0-Encounter won by...(ship reference and name)-add prize money to War
      * Chest and set ship's state to RESTING,
      * 1-Encounter lost as no ship available - deduct prize from the War Chest,
-     * 2-Encounter lost on battle skill and (ship name) sunk" - deduct prize
+     * 2-Encounter lost on skill level and (ship name) sunk" - deduct prize
      * from War Chest and set ship state to SUNK.
      * If an encounter is lost and admiral is completely defeated because there
      * are no ships to decommission,add "You have been defeated " to message,
@@ -247,9 +247,45 @@ public class SeaBattles implements BATHS {
      * @return a String showing the result of fighting the encounter
      */
     public String fightEncounter(int encNo) {
+        Encounter encounter = null;
 
+        for (Encounter e : encounters) {
+            if (e.getId() == encNo)
+                encounter = e;
+        }
 
-        return "Not done";
+        if (encounter == null) {
+            return "No such encounter";
+        }
+
+        Ship ship = admiral.findSuitableShip(encounter);
+
+        if (ship == null) {
+            admiral.subtractFromWarChest(encounter.getPrizeMoney());
+            return "Encounter lost as no suitable ship available";
+        }
+
+        int battleSkill = ship.getBattleSkill();
+        int reqSkill = encounter.getRequiredSkill();
+
+        if (battleSkill >= reqSkill) {
+            admiral.addToWarChest(encounter.getPrizeMoney());
+            ship.setState(ShipState.RESTING);
+            admiral.getSquadron().removeShip(ship);
+            admiral.getReserveFleet().addShip(ship);
+            return "Encounter won by " + ship.getName();
+        } else {
+            admiral.subtractFromWarChest(encounter.getPrizeMoney());
+            ship.setState(ShipState.SUNK);
+            admiral.getSquadron().removeShip(ship);
+            admiral.getSunkShips().addShip(ship);
+
+            if (admiral.getBalance() < 0) {
+                return "Encounter is lost and you lose your job";
+            }
+
+            return "Encounter lost on skill level";
+        }
     }
 
     /**
