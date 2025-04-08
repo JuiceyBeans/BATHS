@@ -12,6 +12,8 @@ public class ManOWar extends Ship {
 
     public ManOWar(String name, String captain, int battleSkill, int marines, int decks) {
         super(name, captain, decks <= 2 ? 300 : 500, battleSkill);
+
+        this.marines = marines;
     }
 
     /**
