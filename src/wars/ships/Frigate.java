@@ -9,8 +9,8 @@ import wars.api.Ship;
 public class Frigate extends Ship {
     private boolean hasPinnace = false;
 
-    public Frigate(String name, int cannons, int battleSkill, boolean hasPinnace) {
-        super(name, cannons * 10, battleSkill);
+    public Frigate(String name, String captain, int cannons, int battleSkill, boolean hasPinnace) {
+        super(name, captain, cannons * 10, battleSkill);
         this.hasPinnace = hasPinnace;
     }
 

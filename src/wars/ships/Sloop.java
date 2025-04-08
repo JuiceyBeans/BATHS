@@ -11,14 +11,14 @@ public class Sloop extends Ship {
     private boolean hasDoctor = false;
     private boolean hasPinnace = false;
 
-    public Sloop(String name, int commissionFee, boolean hasDoctor, boolean hasPinnace) {
-        super(name, commissionFee, 5);
+    public Sloop(String name, String captain, int commissionFee, boolean hasDoctor, boolean hasPinnace) {
+        super(name, captain, commissionFee, 5);
         this.hasDoctor = hasDoctor;
         this.hasPinnace = hasPinnace;
     }
 
-    public Sloop(String name, int commissionFee, boolean hasPinnace) {
-        super(name, commissionFee, 5);
+    public Sloop(String name, String captain, int commissionFee, boolean hasPinnace) {
+        super(name, captain, commissionFee, 5);
         this.hasPinnace = hasPinnace;
     }
 

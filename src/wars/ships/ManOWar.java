@@ -10,8 +10,8 @@ public class ManOWar extends Ship {
     private int marines;
     private int decks;
 
-    public ManOWar(String name, int battleSkill, int marines, int decks, int cannons) {
-        super(name, cannons > 2 ? 300 : 500, battleSkill);
+    public ManOWar(String name, String captain, int battleSkill, int marines, int decks, int cannons) {
+        super(name, captain, cannons > 2 ? 300 : 500, battleSkill);
     }
 
     /**
