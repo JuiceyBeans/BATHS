@@ -60,4 +60,17 @@ public class ManOWar extends Ship {
     public boolean canSkirmish() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.getName()).append(" (Ship Type: ManOWar, State: ").append(this.getState());
+        sb.append(", Captain: ").append(this.getCaptain());
+        sb.append(", Commission Fee: ").append(this.getCommissionFee());
+        sb.append(", Battle Skill: ").append(this.getBattleSkill());
+        sb.append(", Marines: ").append(this.getMarines()).append(")\n");
+
+        return sb.toString();
+    }
 }

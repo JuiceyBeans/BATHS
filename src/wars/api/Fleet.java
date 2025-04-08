@@ -98,7 +98,7 @@ public class Fleet {
 
         sb.append("Fleet contains ").append(ships.size()).append(" ship(s):\n");
         for (Ship ship : ships) {
-            sb.append(ship.getName()).append(" (State: ").append(ship.getState()).append(")\n");
+            sb.append(ship.toString());
         }
         return sb.toString();
     }

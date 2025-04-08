@@ -22,6 +22,18 @@ public class Sloop extends Ship {
         this.hasPinnace = hasPinnace;
     }
 
+    public boolean hasDoctor() {
+        return this.hasDoctor;
+    }
+
+    public boolean hasPinnace() {
+        return this.hasPinnace;
+    }
+
+    public boolean hasPinnaceOrDoctor() {
+        return hasDoctor || hasPinnace;
+    }
+
     @Override
     public boolean canBlockade() {
         return false;
@@ -37,11 +49,16 @@ public class Sloop extends Ship {
         return true;
     }
 
-    public boolean hasDoctor() {
-        return this.hasDoctor;
-    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
-    public boolean hasPinnace() {
-        return this.hasPinnace;
+        sb.append(this.getName()).append(" (Ship Type: Sloop, State: ").append(this.getState());
+        sb.append(", Captain: ").append(this.getCaptain());
+        sb.append(", Commission Fee: ").append(this.getCommissionFee());
+        sb.append(", Battle Skill: ").append(this.getBattleSkill());
+        sb.append(", Has Pinnace/Doctor: ").append(this.hasPinnaceOrDoctor()).append(")\n");
+
+        return sb.toString();
     }
 }
