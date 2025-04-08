@@ -19,6 +19,7 @@ public class Ship {
 
     public Ship(String name, String captain, int commissionFee, int battleSkill) {
         this.name = name;
+        this.captain = captain;
         this.commissionFee = commissionFee;
 
         if (battleSkill < 0 || battleSkill > 10) {
