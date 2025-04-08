@@ -50,7 +50,7 @@ public class SeaBattles implements BATHS {
         setupShips();
         setupEncounters();
         // uncomment for testing Task
-        readEncounters(filename);
+        //readEncounters(filename);
     }
 
 
@@ -63,7 +63,6 @@ public class SeaBattles implements BATHS {
      * admiral, state of the warChest,whether defeated or not, and the ships currently in
      * the squadron,(or, "No ships" if squadron is empty), ships in the reserve fleet
      **/
-    //todo
     public String toString() {
         StringBuilder details = new StringBuilder();
 
@@ -300,44 +299,44 @@ public class SeaBattles implements BATHS {
     private void setupShips() {
         fleet = admiral.getReserveFleet();
 
-        // Man-O-War: "Victory" with battleSkill=3, marines=30, decks=3, cannons=4
-        ManOWar victory = new ManOWar("Victory", 3, 30, 3, 4);
+        // Man-O-War: "Victory" with captain="Alan Aikin", battleSkill=3, marines=30, decks=3, cannons=4
+        ManOWar victory = new ManOWar("Victory", "Alan Aikin", 3, 30, 3);
         fleet.addShip(victory);
 
-        // Frigate: "Sophie" with 16 cannons, battleSkill=8, hasPinnace=true
-        Frigate sophie = new Frigate("Sophie", 16, 8, true);
+        // Frigate: "Sophie" with captain="Ben Baggins", 16 cannons, battleSkill=8, hasPinnace=true
+        Frigate sophie = new Frigate("Sophie", "Ben Baggins", 16, 8, true);
         fleet.addShip(sophie);
 
-        // Man-O-War: "Endeavour" with battleSkill=4, marines=20, decks=2, cannons=2
-        ManOWar endeavour = new ManOWar("Endeavour", 4, 20, 2, 2);
+        // Man-O-War: "Endeavour" with captain="Col Cannon", battleSkill=4, marines=20, decks=2, cannons=2
+        ManOWar endeavour = new ManOWar("Endeavour", "Col Cannon", 4, 20, 2);
         fleet.addShip(endeavour);
 
-        // Sloop: "Arrow" with commissionFee=150, battleSkill=5 (sloops always have skill 5), hasDoctor=false, hasPinnace=true
-        Sloop arrow = new Sloop("Arrow", 150, false, true);
+        // Sloop: "Arrow" with captain="Dan Dare", commissionFee=150, battleSkill=5 (sloops always have skill 5), hasDoctor=false, hasPinnace=true
+        Sloop arrow = new Sloop("Arrow", "Dan Dare", 150, false, true);
         fleet.addShip(arrow);
 
-        // Man-O-War: "Belerophon" with battleSkill=8, marines=50, decks=3, cannons=4
-        ManOWar belerophon = new ManOWar("Belerophon", 8, 50, 3, 4);
+        // Man-O-War: "Belerophon" with captain="Ed Evans",battleSkill=8, marines=50, decks=3, cannons=4
+        ManOWar belerophon = new ManOWar("Belerophon", "Ed Evans", 8, 50, 3);
         fleet.addShip(belerophon);
 
-        // Frigate: "Surprise" with 10 cannons, battleSkill=6, hasPinnace=false
-        Frigate surprise = new Frigate("Surprise", 10, 6, false);
+        // Frigate: "Surprise" with captain="Fred Fox", 10 cannons, battleSkill=6, hasPinnace=false
+        Frigate surprise = new Frigate("Surprise", "Fred Fox", 10, 6, false);
         fleet.addShip(surprise);
 
-        // Frigate: "Jupiter" with 20 cannons, battleSkill=7, hasPinnace=false
-        Frigate jupiter = new Frigate("Jupiter", 20, 7, false);
+        // Frigate: "Jupiter" with captain="Gil Gamage", 20 cannons, battleSkill=7, hasPinnace=false
+        Frigate jupiter = new Frigate("Jupiter", "Gil Gamage", 20, 7, false);
         fleet.addShip(jupiter);
 
-        // Sloop: "Paris" with commissionFee=200, battleSkill=5, hasPinnace=true (using constructor without hasDoctor)
-        Sloop paris = new Sloop("Paris", 200, true);
+        // Sloop: "Paris" with captain="Hal Henry", commissionFee=200, battleSkill=5, hasPinnace=true (using constructor without hasDoctor)
+        Sloop paris = new Sloop("Paris", "Hal Henry", 200, true);
         fleet.addShip(paris);
 
-        // Sloop: "Beast" with commissionFee=400, battleSkill=5, hasDoctor=false, hasPinnace=false
-        Sloop beast = new Sloop("Beast", 400, false, false);
+        // Sloop: "Beast" with captain="Ian Idle", commissionFee=400, battleSkill=5, hasDoctor=false, hasPinnace=false
+        Sloop beast = new Sloop("Beast", "Ian Idle", 400, false, false);
         fleet.addShip(beast);
 
-        // Sloop: "Athena" with commissionFee=100, battleSkill=5, hasDoctor=true, hasPinnace=true
-        Sloop athena = new Sloop("Athena", 100, true, true);
+        // Sloop: "Athena" with captain="John Jones", commissionFee=100, battleSkill=5, hasDoctor=true, hasPinnace=true
+        Sloop athena = new Sloop("Athena", "John Jones", 100, true, true);
         fleet.addShip(athena);
     }
 
@@ -370,7 +369,7 @@ public class SeaBattles implements BATHS {
 
     // Reads encounter data from a text file and populates the encounters list.
     // Assumes each line is formatted as: id,type,location,requiredSkill,prizeMoney
-    public void readEncounters(String filename) {
+    /*public void readEncounters(String filename) {
         // Clear any existing encounters
         encounters.clear();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -400,24 +399,24 @@ public class SeaBattles implements BATHS {
         } catch (IOException e) {
             System.err.println("Error reading encounters: " + e.getMessage());
         }
-    }
+    }*/
 
     // ***************   file write/read  *********************
 
-    /**
+     /**
      * Writes whole game to the specified file
      *
      * @param fname name of file storing requests
      */
     // Saves the entire game state to a file using serialization.
-    public void saveGame(String fname) {
+    /*public void saveGame(String fname) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fname))) {
             out.writeObject(this); // Save the entire object graph
             System.out.println("Game saved successfully to " + fname);
         } catch (IOException e) {
             System.err.println("Error saving game: " + e.getMessage());
         }
-    }
+    }*/
 
     /**
      * reads all information about the game from the specified file
@@ -427,7 +426,7 @@ public class SeaBattles implements BATHS {
      * @return the game (as an SeaBattles object)
      */
     // Loads the game state from a file using serialization and returns the SeaBattles object.
-    public SeaBattles loadGame(String fname) {
+    /*public SeaBattles loadGame(String fname) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fname))) {
             SeaBattles loadedGame = (SeaBattles) in.readObject();
             System.out.println("Game loaded successfully from " + fname);
@@ -436,7 +435,7 @@ public class SeaBattles implements BATHS {
             System.err.println("Error loading game: " + e.getMessage());
             return null;
         }
-    }
+    }*/
 }
 
 

@@ -10,8 +10,10 @@ public class ManOWar extends Ship {
     private int marines;
     private int decks;
 
-    public ManOWar(String name, int battleSkill, int marines, int decks, int cannons) {
-        super(name, cannons > 2 ? 300 : 500, battleSkill);
+    public ManOWar(String name, String captain, int battleSkill, int marines, int decks) {
+        super(name, captain, decks <= 2 ? 300 : 500, battleSkill);
+
+        this.marines = marines;
     }
 
     /**
@@ -57,5 +59,18 @@ public class ManOWar extends Ship {
     @Override
     public boolean canSkirmish() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.getName()).append(" (Ship Type: ManOWar, State: ").append(this.getState());
+        sb.append(", Captain: ").append(this.getCaptain());
+        sb.append(", Commission Fee: ").append(this.getCommissionFee());
+        sb.append(", Battle Skill: ").append(this.getBattleSkill());
+        sb.append(", Marines: ").append(this.getMarines()).append(")\n");
+
+        return sb.toString();
     }
 }

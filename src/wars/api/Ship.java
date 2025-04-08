@@ -12,13 +12,14 @@ public class Ship {
     // todo uncomment all lines related to captain once implemented
 
     private String name;
-    private BlueAdmiral captain;
+    private String captain;
     private int commissionFee;
     private final int battleSkill;
     private ShipState state;
 
-    public Ship(String name, int commissionFee, int battleSkill) {
+    public Ship(String name, String captain, int commissionFee, int battleSkill) {
         this.name = name;
+        this.captain = captain;
         this.commissionFee = commissionFee;
 
         if (battleSkill < 0 || battleSkill > 10) {
@@ -91,11 +92,11 @@ public class Ship {
         this.name = name;
     }
 
-    public BlueAdmiral getCaptain() {
+    public String getCaptain() {
         return captain;
     }
 
-    public void setCaptain(BlueAdmiral captain) {
+    public void setCaptain(String captain) {
         this.captain = captain;
     }
 
