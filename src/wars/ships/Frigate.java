@@ -45,7 +45,7 @@ public class Frigate extends Ship {
 
     @Override
     public boolean canSkirmish() {
-        return false;
+        return true;
     }
 
     @Override

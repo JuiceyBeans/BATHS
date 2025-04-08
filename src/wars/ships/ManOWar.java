@@ -58,7 +58,7 @@ public class ManOWar extends Ship {
 
     @Override
     public boolean canSkirmish() {
-        return true;
+        return false;
     }
 
     @Override
