@@ -12,12 +12,12 @@ public class Ship {
     // todo uncomment all lines related to captain once implemented
 
     private String name;
-    private BlueAdmiral captain;
+    private String captain;
     private int commissionFee;
     private final int battleSkill;
     private ShipState state;
 
-    public Ship(String name, int commissionFee, int battleSkill) {
+    public Ship(String name, String captain, int commissionFee, int battleSkill) {
         this.name = name;
         this.commissionFee = commissionFee;
 
