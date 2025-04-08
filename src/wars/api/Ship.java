@@ -91,11 +91,11 @@ public class Ship {
         this.name = name;
     }
 
-    public BlueAdmiral getCaptain() {
+    public String getCaptain() {
         return captain;
     }
 
-    public void setCaptain(BlueAdmiral captain) {
+    public void setCaptain(String captain) {
         this.captain = captain;
     }
 
