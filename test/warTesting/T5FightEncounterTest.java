@@ -83,7 +83,7 @@ public class T5FightEncounterTest {
 
         game.commissionShip("Victory");
         String actual = game.fightEncounter(5);
-        assertTrue(actual.contains("lost on battle skill"));
+        assertTrue(actual.contains("lost on skill level"));
     }
     
   
@@ -178,7 +178,7 @@ public class T5FightEncounterTest {
 
         game.commissionShip("Victory");
         String actual = game.fightEncounter(4);
-        assertTrue(actual.contains("lost on battle skill"));
+        assertTrue(actual.contains("lost on skill level"));
     }
     
     
