@@ -214,7 +214,7 @@ public class T5FightEncounterTest {
         double expected = 410;
         game.commissionShip("Belerophon"); //warchest= 500
         String actual = game.fightEncounter(2); //can't do
-        assertTrue(actual.contains("no ship available"));
+        assertTrue(actual.contains("no suitable ship available"));
     }
     
     @Test
@@ -268,7 +268,7 @@ public class T5FightEncounterTest {
     public void FrigateFacingBlockadeNoPinaceloses() {
        game.commissionShip("Surprise"); // warchest 900
        String actual = game.fightEncounter(3);
-       assertTrue(actual.contains("no ship"));
+       assertTrue(actual.contains("no suitable ship"));
     }
     
     //  Frigate facing Blockade
